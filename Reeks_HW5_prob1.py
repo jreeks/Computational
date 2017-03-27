@@ -13,7 +13,7 @@ from math import pi
 def mycos(t, a, b, c):
 	return a*np.cos(2*pi*t + b) +c
 
-data = np.array(np.loadtxt('Munich_weather.txt', float))
+data = np.array(np.loadtxt('Munichweather.txt', float))
 
 #a###########################
 
@@ -42,9 +42,9 @@ temperature = data[:,1]
 
 # mask outliers 
 
-m_temp = ma.masked_where((temperature  < 30) & (temperature > -10))[0]
+m_temp = ma.masked_outside(temperature, 30, -20, copy = True)
 
-time = ma.masked_array(x, m_temp.mask)
+
 
 for n in m_temp:
 	nx += 1
@@ -99,8 +99,5 @@ plt.legend()
 plt.show()
 
 #print coefficients
-print ('a, b, and c are ',  *fit[0], ' respectively')
-
-
-
+print ('a, b, and c are ', *fit[0], ' respectively')
 
