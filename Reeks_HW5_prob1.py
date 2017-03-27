@@ -13,7 +13,7 @@ from math import pi
 def mycos(t, a, b, c):
 	return a*np.cos(2*pi*t + b) +c
 
-data = np.array(np.loadtxt('Munichweather.txt', float))
+data = np.array(np.loadtxt('munich_weather_bad_data_included.txt', float))
 
 #a###########################
 
