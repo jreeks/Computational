@@ -6,6 +6,8 @@ import pylab as plt
 
 import numpy as np
 
+import numpy.ma as ma
+
 from math import pi
 
 def mycos(t, a, b, c):
@@ -38,21 +40,29 @@ data = data[np.logical_not(np.logical_or(data[:,0] < 2008, data[:,0]>=2013))]
 
 temperature = data[:,1]
 
-for n in temperature:
+# mask outliers 
+
+m_temp = ma.masked_where((temperature  < 30) & (temperature > -10))[0]
+
+time = ma.masked_array(x, m_temp.mask)
+
+for n in m_temp:
 	nx += 1
-	if n <= np.mean(temperature):
+	if n <= np.mean(m_temp):
 		wtemp.append(n)
 	else:
 		stemp.append(n)
 
 t = np.linspace(2008,2013,nx)
 
-a_guess = np.amax(temperature)
+
+
+a_guess = np.amax(m_temp)
 
 
 b_guess = 2008
 
-c_guess = np.mean(temperature)
+c_guess = np.mean(m_temp)
 
 hot = np.mean(stemp)
 
@@ -67,7 +77,7 @@ print ("The average temperature in Munich from the beginning of 2008 to the end 
 
 
 #doing a fit
-fit = curve_fit(mycos,t,temperature, p0=p0)
+fit = curve_fit(mycos,t,m_temp, p0=p0)
 
 #plot first estimate
 
@@ -77,23 +87,9 @@ first_estimate = mycos(t,*p0)
 
 temp_fit = mycos(t,*fit[0])
 
-##popt, pcov = curve_fit(mycos,x,y)
+#plot data
 
-
-
-
-#timedata = np.linspace(2008,2013,nx)
-
-#temp_guess = mycos(t,*p0)
-
-
-
-#tempdata = 
-
-
-
-
-plt.plot(t,temperature,'.')
+plt.plot(t,m_temp,'.')
 plt.plot(t,temp_fit, label = 'after fitting')
 plt.plot(t,first_estimate, label = 'first guess')
 plt.xlim = (2008,2013)
@@ -102,14 +98,9 @@ plt.ylabel ("Temperature")
 plt.legend()
 plt.show()
 
+#print coefficients
+print ('a, b, and c are ',  *fit[0], ' respectively')
 
-# a = 
-
-
-# b = 
-
-
-# c =
 
 
 
