@@ -21,8 +21,7 @@ subset = data[1][cut]
 
 #Select data to plot
 Z = []
-Z2 = []
-Z3 = []
+
 
 ZERR = []
 SPEC1 = []
@@ -121,108 +120,6 @@ first_estimate_q = quad(Z,*p0)
 zqfit = quad(Z,*qfit[0])
 
 
-#broken linear
-
-minit2 = []
-bguess2 = 0
-
-bdata2 = 0
-
-spec2 = []
-
-spec3 = []
-minit3 = []
-
-mguess2 = 0
-mguess3 = 0
-
-
-for n in SPEC:
-	if n <= 0.5:
-		spec2.append(n)
-	else:
-		spec3.append(n)
-
-for k in range(len(spec2)):
-	Z2.append(subset[k]['Z'])
-	
-
-	
-
-for k in range(len(spec3)):
-	Z3.append(subset[k]['Z'])
-	
-
-	
-
-
-for n in range((len(spec2)) - 1):
-	dd2 = (Z2[n+1]-Z2[n])/(spec2[n+1]-spec2[n])
-	minit3.append(dd2)
-
-	if spec2[n] == 0:
-		bdata2 = True
-		bguess2 = Z3[n]
-	else:
-		bdata2 = False
-
-mguess2 = np.mean(minit2)
-
-if bdata2 == False:
-
-	bguess2 = Z2[4] - (mguess2*spec2[4])
-
-
-#doing a fit
-
-p0 = [mguess2, bguess2]
-
-linfit2 = curve_fit(linear,Z2,spec2, p0=p0)
-
-#first estimate
-
-first_estimate_lin2 = linear(Z,*p0)
-
-#recreate fit post-op
-
-zlinfit2 = linear(Z,*linfit2[0])
-
-
-
-for n in range((len(spec3)) - 1):
-	dd3 = (Z3[n+1]-Z3[n])/(spec3[n+1]-spec3[n])
-	minit3.append(dd3)
-
-	if spec3[n] == 0:
-		bdata3 = True
-		bguess3 = Z2[n]
-	else:
-		bdata3 = False
-
-mguess3 = np.mean(minit3)
-
-if bdata3 == False:
-
-	bguess2 = Z3[4] - (mguess3*spec3[4])
-
-
-#doing a fit
-
-p0 = [mguess3, bguess3]
-
-linfit3 = curve_fit(linear,Z3,spec3, p0=p0)
-
-#first estimate
-
-first_estimate_lin3 = linear(Z,*p0)
-
-#recreate fit post-op
-
-zlinfit3 = linear(Z,*linfit3[0])
-
-
-#make fit
-
 
 #plot fits
 
@@ -233,12 +130,7 @@ plt.plot(Z,first_estimate_lin, label = 'lin1 first guess')
 plt.plot(Z,zqfit,',', label = 'quad after fitting')
 plt.plot(Z,first_estimate_q,',', label= 'quad first estimate')
 
-plt.plot(Z2,zlinfit2, label = 'lin2 after fitting')
-plt.plot(Z2,first_estimate_lin2, label = 'lin2 first guess')
 
-
-plt.plot(Z3,zlinfit3, label = 'lin3 after fitting')
-plt.plot(Z3,first_estimate_lin3, label = 'lin3 first guess')
 
 plt.xlabel ("SPECTROFLUX[3]")
 plt.ylabel ("Z")
