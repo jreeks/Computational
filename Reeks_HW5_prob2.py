@@ -175,7 +175,7 @@ if bdata2 == False:
 
 #doing a fit
 
-p0 = [mguess2, bguess3]
+p0 = [mguess2, bguess2]
 
 linfit3 = curve_fit(linear,Z2,spec2, p0=p0)
 
@@ -208,7 +208,7 @@ if bdata3 == False:
 
 #doing a fit
 
-p0 = [mguess3, bguess2]
+p0 = [mguess3, bguess3]
 
 linfit3 = curve_fit(linear,Z3,spec3, p0=p0)
 
