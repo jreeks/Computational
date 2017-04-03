@@ -177,15 +177,15 @@ if bdata2 == False:
 
 p0 = [mguess2, bguess2]
 
-linfit3 = curve_fit(linear,Z2,spec2, p0=p0)
+linfit2 = curve_fit(linear,Z2,spec2, p0=p0)
 
 #first estimate
 
-first_estimate_lin3 = linear(Z,*p0)
+first_estimate_lin2 = linear(Z,*p0)
 
 #recreate fit post-op
 
-zlinfit = linear(Z,*linfit3[0])
+zlinfit2 = linear(Z,*linfit2[0])
 
 
 
@@ -203,7 +203,7 @@ mguess3 = np.mean(minit3)
 
 if bdata3 == False:
 
-	bguess3 = Z3[4] - (mguess3*spec3[4])
+	bguess2 = Z3[4] - (mguess3*spec3[4])
 
 
 #doing a fit
