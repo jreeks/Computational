@@ -82,3 +82,28 @@ plt.xlabel ("Time")
 plt.ylabel ("Theta (Radians)")
 
 plt.show ()
+
+theta = [-pi/1.99]
+
+wh = [0]
+
+
+for j in range (nsteps):
+	k = (-g/l)*sin(theta[j])
+	w2 = wh[j] + k*(step/2)
+
+	theta.append(theta[j] + wh[j-1]*step)
+	k1 = (-g/l)*sin(theta[j+1])
+
+	wh.append(w2 + (step*k1))
+	theta[j+1] = theta[j] + (step*wh[j])
+
+
+
+	
+
+plt.plot (time,theta, label = 'leapfrog')
+plt.xlabel ("Time")
+plt.ylabel ("Theta (Radians)")
+plt.legend()
+plt.show ()
